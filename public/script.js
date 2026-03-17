@@ -99,18 +99,24 @@ function updateScore(){
 
 function drawWinLine(condition){
 
+    const board = document.querySelector('.board');
+
+    const boardRect = board.getBoundingClientRect();
+
+    const scale = boardRect.width / 360;
+
     const lineStyles = {
 
-        "0,1,2": { top: 60, left: 0, width: 360, rotate: 0 },
-        "3,4,5": { top: 180, left: 0, width: 360, rotate: 0 },
-        "6,7,8": { top: 300, left: 0, width: 360, rotate: 0 },
+        "0,1,2": { top: 60 * scale, left: 0, width: 360 * scale, rotate: 0 },
+        "3,4,5": { top: 180 * scale, left: 0, width: 360 * scale, rotate: 0 },
+        "6,7,8": { top: 300 * scale, left: 0, width: 360 * scale, rotate: 0 },
 
-        "0,3,6": { top: 0, left: 60, width: 360, rotate: 90 },
-        "1,4,7": { top: 0, left: 180, width: 360, rotate: 90 },
-        "2,5,8": { top: 0, left: 300, width: 360, rotate: 90 },
+        "0,3,6": { top: 0, left: 60 * scale, width: 360 * scale, rotate: 90 },
+        "1,4,7": { top: 0, left: 180 * scale, width: 360 * scale, rotate: 90 },
+        "2,5,8": { top: 0, left: 300 * scale, width: 360 * scale, rotate: 90 },
 
-        "0,4,8": { top: 0, left: 0, width: 510, rotate: 45 },
-        "2,4,6": { top: 360, left: 0, width: 510, rotate: -45 }
+        "0,4,8": { top: 0, left: 0, width: 510 * scale, rotate: 45 },
+        "2,4,6": { top: 360 * scale, left: 0, width: 510 * scale, rotate: -45 }
     };
 
     let key = condition.toString();
@@ -250,3 +256,18 @@ function sendMove(index, player){
 socket.on('move', data => {
     makeMove(data.index, data.player);
 });
+
+function adjustBoardSize() {
+    const width = window.innerWidth;
+    const board = document.querySelector('.board');
+    if (width < 400) {
+        board.style.width = '90vw';
+    } else if (width < 768) {
+        board.style.width = '300px';
+    } else {
+        board.style.width = '360px';
+    }
+}
+
+window.addEventListener('load', adjustBoardSize);
+window.addEventListener('resize', adjustBoardSize);

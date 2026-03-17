@@ -82,6 +82,21 @@ button:hover {
     transition: width 0.3s ease;
 }
 
+@media (max-width: 768px) {
+    .board {
+        width: 300px;
+    }
+    
+    .cell {
+        font-size: 60px;
+    }
+    
+    .scoreboard {
+        gap: 30px;
+        font-size: 20px;
+    }
+}
+
 @media (max-width: 400px) {
     .board {
         width: 90vw;
@@ -90,7 +105,7 @@ button:hover {
     
     .cell {
         aspect-ratio: 1 / 1;
-    font-size: clamp(40px, 10vw, 80px);
+        font-size: clamp(40px, 10vw, 80px);
     }
     
     .scoreboard {
