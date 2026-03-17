@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>TIC TAC TOE</h1>
+
+    <div class="scoreboard">
+  <div><span class="x">X:</span> <span id="scoreX">0</span></div>
+  <div><span class="o">O:</span> <span id="scoreO">0</span></div>
+</div>
+    <div class="mode-buttons">
+  <button onclick="setMode('pvp')" id="btn-pvp">Player vs Player</button>
+  <button onclick="setMode('easy')" id="btn-easy">Easy AI</button>
+  <button onclick="setMode('hard')" id="btn-hard">Hard AI</button>
+</div>
+
+
+    <div class="board" id="board">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="win-line" id="winLine"></div>
+    </div>
+
+    <h2 id="status"></h2>
+    <button onclick="restartGame()">Qayta boshlash</button>
+    
+
+    <script src="script.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io('https://your-server.com'); // o‘z serveringiz manzili
+
+  // O‘zgarishlarni yuborish
+  function sendMove(index, player) {
+    socket.emit('move', { index, player });
+  }
+
+  // Boshqa o‘yinchidan kelgan yurishni olish
+  socket.on('move', data => {
+    // data: { index: 4, player: 'X' }
+    makeMove(data.index, data.player);
+  });
+
+  // Yurish qilganda uni serverga yuborish
+  cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+      if (board[index] === "" && gameActive) {
+        makeMove(index, currentPlayer);
+        sendMove(index, currentPlayer);
+      }
+    });
+  });
+</script>
+</body>
+</html>
